@@ -17,7 +17,7 @@ def tables(image):
     cropped_images = []
     for c in contours:
         x, y, w, h = cv.boundingRect(c)
-        if h >= 150 and w >= 2222:
+        if h >= 120 and w >= 2066:
             cv.rectangle(img, (x, y), (x + w, y + h), (36,255,12), 2)
             crop_img = img[y:y+h, x:x+w]
             cropped_images.append(crop_img)
