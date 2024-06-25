@@ -19,7 +19,7 @@ def tables(image):
         x, y, w, h = cv.boundingRect(c)
         #cv.putText(img, str(h), (x,y - 10), cv.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
         #cv.rectangle(img, (x, y), (x + w, y + h), (36,255,12), 1)
-        if h >= 120 and w >= 2222:
+        if h >= 120 and w >= 2066:
             cv.rectangle(img, (x, y), (x + w, y + h), (36,255,12), 2)
             crop_img = img[y:y+h, x:x+w]
             cropped_images.append(crop_img)
