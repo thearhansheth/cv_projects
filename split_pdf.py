@@ -14,19 +14,26 @@ def tables(image):
     _, thresh = cv.threshold(gray_img, 150, 255, cv.THRESH_BINARY_INV)
     # find contours
     contours, heirarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
-    cv.drawContours(img, contours, -1, (0, 255, 0), 3)
-    return img
-
+    cropped_images = []
+    for c in contours:
+        x, y, w, h = cv.boundingRect(c)
+        if h >= 150 and w >= 2222:
+            cv.rectangle(img, (x, y), (x + w, y + h), (36,255,12), 2)
+            crop_img = img[y:y+h, x:x+w]
+            cropped_images.append(crop_img)
+    return cropped_images
 
 
 # import pdf
-filepath = "/Users/arhan.sheth/Documents/Codes/DX/cv_projects/empty-receivables-6-20pm.pdf"
+filepath = "/Users/arhan.sheth/Documents/Codes/DX/cv_projects/splittingTables/empty-receivables-6-20pm.pdf"
 
 #convert into image and add contours
 page_img = pdf_to_img(filepath)
 img_table = tables(page_img)
-cv.imshow("img", img_table)
-cv.waitKey(0)
-cv.destroyAllWindows()
 
+#save each file 
+for i, table in enumerate(img_table):
+    img_path = f"/Users/arhan.sheth/Documents/Codes/DX/cv_projects/splittingTables/cropped_table{i}.jpeg"
+    cv.imwrite(img_path, table)
+    print(f"Table{i} cropped and saved")
 
